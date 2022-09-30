@@ -8,7 +8,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardStorageService", "CardS
 		{20150E64-150D-47E1-B340-E9AC8334ADC1} = {20150E64-150D-47E1-B340-E9AC8334ADC1}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardStorageService.DataBase", "CardStorageService.DataBase\CardStorageService.DataBase.csproj", "{20150E64-150D-47E1-B340-E9AC8334ADC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardStorageService.DataBase", "CardStorageService.DataBase\CardStorageService.DataBase.csproj", "{20150E64-150D-47E1-B340-E9AC8334ADC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardStorageService.Core", "CardStorageService.Core\CardStorageService.Core.csproj", "{108AE741-F516-40CE-8707-355A0C8722D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardStorageService.Console", "CardStorageService.Console\CardStorageService.Console.csproj", "{D46FDC4D-088C-45F7-8896-EE80070B1FFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +28,14 @@ Global
 		{20150E64-150D-47E1-B340-E9AC8334ADC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20150E64-150D-47E1-B340-E9AC8334ADC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{20150E64-150D-47E1-B340-E9AC8334ADC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{108AE741-F516-40CE-8707-355A0C8722D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{108AE741-F516-40CE-8707-355A0C8722D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{108AE741-F516-40CE-8707-355A0C8722D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{108AE741-F516-40CE-8707-355A0C8722D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D46FDC4D-088C-45F7-8896-EE80070B1FFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D46FDC4D-088C-45F7-8896-EE80070B1FFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D46FDC4D-088C-45F7-8896-EE80070B1FFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D46FDC4D-088C-45F7-8896-EE80070B1FFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
