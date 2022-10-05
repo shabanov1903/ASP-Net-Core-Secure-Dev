@@ -1,11 +1,13 @@
 ﻿using CardStorageService.DataBase.Entities;
 using CardStorageService.DataBase.Repository;
-using CardStorageService.DTO;
+using CardStorageService.Core.Models.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CardStorageService.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ClientController : ControllerBase
@@ -34,8 +36,7 @@ namespace CardStorageService.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Create client error");
-                return Ok(new ErrorDTO());
+                return Ok(Error(e, "Create client error"));
             }
             return Ok();
         }
@@ -50,8 +51,7 @@ namespace CardStorageService.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Delete client error");
-                return Ok(new ErrorDTO());
+                return Ok(Error(e, "Delete client error"));
             }
             return Ok();
         }
@@ -67,8 +67,7 @@ namespace CardStorageService.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Get all clients error");
-                return Ok(new ErrorDTO());
+                return Ok(Error(e, "Get all clients error"));
             }
             return Ok();
         }
@@ -84,8 +83,7 @@ namespace CardStorageService.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Get client error");
-                return Ok(new ErrorDTO());
+                return Ok(Error(e, "Get client error"));
             }
             return Ok();
         }
@@ -109,10 +107,19 @@ namespace CardStorageService.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Update client error");
-                return Ok(new ErrorDTO());
+                return Ok(Error(e, "Update client error"));
             }
             return Ok();
+        }
+
+        private ClientDTO Error(Exception e, string message)
+        {
+            _logger.LogError(e, message);
+            return new ClientDTO
+            {
+                Code = 500,
+                Message = message
+            };
         }
     }
 }
