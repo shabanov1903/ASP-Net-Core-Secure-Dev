@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace CardStorageService.DataBase.Entities
 {
+    [Table("Clients")]
     public class Client
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]

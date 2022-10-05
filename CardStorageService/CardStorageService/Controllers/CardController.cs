@@ -1,13 +1,15 @@
 ﻿using CardStorageService.DataBase.Entities;
 using CardStorageService.DataBase.Repository;
 using CardStorageService.DataBase.Repository.Impl;
-using CardStorageService.DTO;
+using CardStorageService.Core.Models.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CardStorageService.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CardController : ControllerBase
@@ -38,8 +40,13 @@ namespace CardStorageService.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Create card error");
-                return Ok(new ErrorDTO());
+                string message = "Create card error";
+                _logger.LogError(e, message);
+                return Ok(new CardDTO
+                {
+                    Code = 500,
+                    Message = message
+                });
             }
             return Ok();
         }
@@ -54,8 +61,13 @@ namespace CardStorageService.Controllers
             }
             catch (Exception e)
             {
+                string message = "Delete card error";
                 _logger.LogError(e, "Delete card error");
-                return Ok(new ErrorDTO());
+                return Ok(new CardDTO
+                {
+                    Code = 500,
+                    Message = message
+                });
             }
             return Ok();
         }
@@ -71,8 +83,7 @@ namespace CardStorageService.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Get all card error");
-                return Ok(new ErrorDTO());
+                return Ok(Error(e, "Get all card error"));
             }
             return Ok();
         }
@@ -88,8 +99,7 @@ namespace CardStorageService.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Get card error");
-                return Ok(new ErrorDTO());
+                return Ok(Error(e, "Get card error"));
             }
             return Ok();
         }
@@ -115,10 +125,19 @@ namespace CardStorageService.Controllers
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "Update card error");
-                return Ok(new ErrorDTO());
+                return Ok(Error(e, "Update card error"));
             }
             return Ok();
+        }
+
+        private CardDTO Error(Exception e, string message)
+        {
+            _logger.LogError(e, message);
+            return new CardDTO
+            {
+                Code = 500,
+                Message = message
+            };
         }
     }
 }
