@@ -1,9 +1,13 @@
+using AutoMapper;
 using CardStorageService.Core.Crypto;
 using CardStorageService.Core.Crypto.Impl;
+using CardStorageService.Core.Models.DTO;
 using CardStorageService.DataBase;
 using CardStorageService.DataBase.Entities;
 using CardStorageService.DataBase.Repository;
 using CardStorageService.DataBase.Repository.Impl;
+using CardStorageService.Services;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +24,21 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+#region Configure Mapper
+
+var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MappingsProfile()));
+var mapper = mapperConfiguration.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+#endregion
+
+#region Configure FluentValidator
+
+builder.Services.AddScoped<IValidator<AuthenticationRequestDTO>, AuthenticationValidator>();
+builder.Services.AddScoped<IValidator<CardDTO>, CardValidator>();
+
+#endregion
 
 #region Logging service
 

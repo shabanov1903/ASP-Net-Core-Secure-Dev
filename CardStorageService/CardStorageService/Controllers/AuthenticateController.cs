@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.Net.Http.Headers;
 using System.Net.Http.Headers;
 using CardStorageService.Core.Models;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace CardStorageService.Controllers
 {
@@ -14,16 +16,22 @@ namespace CardStorageService.Controllers
     public class AuthenticateController : ControllerBase
     {
         private readonly IAuthenticateService _authenticateService;
+        private readonly IValidator<AuthenticationRequestDTO> _authenticationValidator;
 
-        public AuthenticateController(IAuthenticateService authenticateService)
+        public AuthenticateController(IAuthenticateService authenticateService, IValidator<AuthenticationRequestDTO> authenticationValidator)
         {
             _authenticateService = authenticateService;
+            _authenticationValidator = authenticationValidator;
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Login([FromBody] AuthenticationRequestDTO authenticationRequest)
         {
+            ValidationResult validationResult = _authenticationValidator.Validate(authenticationRequest);
+            if (!validationResult.IsValid)
+                return BadRequest(validationResult.ToDictionary());
+
             AuthenticationResponseDTO authenticationResponse = _authenticateService.Login(authenticationRequest);
             if (authenticationResponse.Status == AuthenticationStatus.Success)
             {

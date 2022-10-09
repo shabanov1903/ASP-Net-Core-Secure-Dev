@@ -4,6 +4,7 @@ using CardStorageService.Core.Models.DTO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
 namespace CardStorageService.Controllers
 {
@@ -14,11 +15,13 @@ namespace CardStorageService.Controllers
     {
         private readonly ILogger<CardController> _logger;
         private readonly IRepository<Client, int> _clientRepository;
+        private readonly IMapper _mapper;
 
-        public ClientController(ILogger<CardController> logger, IRepository<Client, int> clientRepository)
+        public ClientController(ILogger<CardController> logger, IRepository<Client, int> clientRepository, IMapper mapper)
         {
             _logger = logger;
             _clientRepository = clientRepository;
+            _mapper = mapper;
         }
 
         [HttpPost("create")]
@@ -27,12 +30,7 @@ namespace CardStorageService.Controllers
         {
             try
             {
-                _clientRepository.Create(new Client
-                {
-                    Surname = client.Surname,
-                    FirstName = client.FirstName,
-                    Patronymic = client.Patronymic
-                });
+                _clientRepository.Create(_mapper.Map<Client>(client));
             }
             catch (Exception e)
             {
@@ -63,7 +61,7 @@ namespace CardStorageService.Controllers
             try
             {
                 var response = _clientRepository.GetAll();
-                return Ok(response);
+                return Ok(_mapper.Map<IList<ClientDTO>>(response));
             }
             catch (Exception e)
             {
@@ -79,7 +77,7 @@ namespace CardStorageService.Controllers
             try
             {
                 var response = _clientRepository.GetById(id);
-                return Ok(response);
+                return Ok(_mapper.Map<ClientDTO>(response));
             }
             catch (Exception e)
             {
@@ -96,13 +94,7 @@ namespace CardStorageService.Controllers
             {
                 if (client.ClientId != null)
                 {
-                    _clientRepository.Update(new Client
-                    {
-                        ClientId = client.ClientId.Value,
-                        Surname = client.Surname,
-                        FirstName = client.FirstName,
-                        Patronymic = client.Patronymic
-                    });
+                    _clientRepository.Update(_mapper.Map<Client>(client));
                 }
             }
             catch (Exception e)
