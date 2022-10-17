@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CardStorageService.Core.Models.DTO;
 using CardStorageService.DataBase.Entities;
+using CardStorageService.Protos;
 
 namespace CardStorageService.Services
 {
@@ -13,6 +14,9 @@ namespace CardStorageService.Services
 
             CreateMap<Client, ClientDTO>();
             CreateMap<ClientDTO, Client>();
+
+            CreateMap<Client, ClientRPC>();
+            CreateMap<ClientRPC, Client>();
         }
     }
 }
