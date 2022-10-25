@@ -1,0 +1,26 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "CardStorageService.Protos";
+
+service ClientService {
+	rpc Create(ClientRPC) returns (IdRPC);
+	rpc GetById(IdRPC) returns (ClientRPC);
+	rpc GetAll(GetAllPRC) returns (ClientListRPC);
+}
+
+message IdRPC {
+	int32 ClientId = 1;
+}
+
+message ClientRPC {
+	int32 ClientId = 1;
+	string Surname = 2;
+	string FirstName = 3;
+	string Patronymic = 4;
+}
+
+message ClientListRPC {
+	repeated ClientRPC Clients = 1;
+}
+
+message GetAllPRC { }
